@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children?: ReactNode;
@@ -17,9 +17,13 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Uncaught error:', error, errorInfo);
+  }
+
   public render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+    if (this.state.hasError === true) {
+      return <h1 className="m-auto">Something went wrong.</h1>;
     }
 
     return this.props.children;

@@ -7,7 +7,7 @@ interface MyProps {
 
 export class Card extends Component<MyProps> {
   getStatusColor(value: string) {
-    let color = 'text-blue-500';
+    let color = 'text-sky-500';
 
     if (value === 'Alive') {
       color = 'text-green-500';

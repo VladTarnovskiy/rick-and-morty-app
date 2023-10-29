@@ -56,7 +56,7 @@ export class MainPage extends Component<MyProps, MyState> {
         <Card charter={charter} key={charter.id} />
       ));
     } else if (!this.state.result && !this.state.loader) {
-      content = <div className="text-white">Nothing Found.</div>;
+      content = <div className="text-white mt-[300px]">Nothing Found.</div>;
     } else {
       content = <Loader />;
     }
