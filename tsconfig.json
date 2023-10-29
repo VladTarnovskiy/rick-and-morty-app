@@ -16,15 +16,15 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "rootDir": "./",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "rootDir": "./"
+    // "paths": {
+    //   "@/*": ["*"]
+    // }
   },
-  "plugins": [
-    { "transform": "typescript-transform-paths" },
-    { "transform": "typescript-transform-paths", "afterDeclarations": true }
-  ],
+  // "plugins": [
+  //   { "transform": "typescript-transform-paths" },
+  //   { "transform": "typescript-transform-paths", "afterDeclarations": true }
+  // ],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
