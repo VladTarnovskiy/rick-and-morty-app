@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { SearchBar } from '../../components/Search/SearchBar';
 import { getCharacterInfo } from '../../api/api';
 import { Character, CharacterInfo } from '../../types/types';
@@ -6,60 +6,50 @@ import { Card } from '../../components/Card/Card';
 import './mainPage.scss';
 import { Loader } from '../../components/Loader/Loader';
 
-interface MyProps {}
+export const MainPage: FC = () => {
+  const [character, setCharacter] = useState<Character[]>([]);
+  const [result, setResult] = useState(false);
+  const [loader, setLoader] = useState(false);
 
-interface MyState {
-  character: Character[];
-  result: boolean;
-  loader: boolean;
-}
-
-export class MainPage extends Component<MyProps, MyState> {
-  state = {
-    character: [],
-    result: false,
-    loader: false,
-  };
-  componentDidMount() {
-    const searchValue = localStorage.getItem('searchValue');
-    let value = '';
-    if (searchValue !== null) {
-      value = searchValue;
-    }
-    this.searchProducts(value);
-  }
-  searchProducts = async (value: string) => {
+  const searchProducts = useCallback(async (value: string) => {
     try {
-      this.setState({
-        result: false,
-        loader: true,
-      });
+      setContent(false, true);
       const characterInfo: CharacterInfo = await getCharacterInfo(value);
       setTimeout(() => {
         const character = characterInfo.results;
-        this.setState({ character: character, result: true, loader: false });
+        setCharacter(character);
+        setContent(true, false);
       }, 3000);
     } catch {
-      this.setState({ result: false, loader: false });
+      setContent(false, false);
     }
+  }, []);
+
+  useEffect(() => {
+    const searchValue: string = localStorage.getItem('searchValue') || '';
+
+    searchProducts(searchValue);
+  }, [searchProducts]);
+
+  const setContent = (result: boolean, loader: boolean) => {
+    setResult(result);
+    setLoader(loader);
   };
 
-  render() {
-    let content: JSX.Element | JSX.Element[];
-    if (this.state.result) {
-      content = this.state.character.map((character: Character) => (
-        <Card character={character} key={character.id} />
-      ));
-    } else if (!this.state.result && !this.state.loader) {
-      content = <div className="text-white mt-[300px]">Nothing Found.</div>;
-    } else {
-      content = <Loader />;
-    }
-    return (
-      <div>
-        <SearchBar onSearch={this.searchProducts} />
-        <div className="cards__container p-5">{content}</div>
-      </div>
-    );
+  let content: JSX.Element | JSX.Element[];
+  if (result) {
+    content = character.map((character: Character) => (
+      <Card character={character} key={character.id} />
+    ));
+  } else if (!result && !loader) {
+    content = <div className="text-white mt-[300px]">Nothing Found.</div>;
+  } else {
+    content = <Loader />;
   }
-}
+  return (
+    <div>
+      <SearchBar onSearch={searchProducts} />
+      <div className="cards__container p-5">{content}</div>
+    </div>
+  );
+};

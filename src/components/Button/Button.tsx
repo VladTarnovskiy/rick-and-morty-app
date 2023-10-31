@@ -1,21 +1,17 @@
-import { Component } from 'react';
+import { FC } from 'react';
 
 interface MyProps {
   onClick: () => void;
   children: React.ReactNode;
 }
 
-export class Button extends Component<MyProps> {
-  render() {
-    const { onClick, children } = this.props;
-
-    return (
-      <button
-        onClick={onClick}
-        className="h-10 rounded-md p-2 text-md shadow-teal-500 shadow-sm hover:shadow-yellow-400 bg-gray-800"
-      >
-        {children}
-      </button>
-    );
-  }
-}
+export const Button: FC<MyProps> = ({ onClick, children }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="h-10 rounded-md p-2 text-md shadow-teal-500 shadow-sm hover:shadow-yellow-400 bg-gray-800"
+    >
+      {children}
+    </button>
+  );
+};
