@@ -4,7 +4,8 @@ import axios from 'axios';
 const baseURL = 'https://rickandmortyapi.com/api';
 
 export const getCharacterInfo = async (
-  value: string
+  value: string,
+  page: number
 ): Promise<CharacterInfo> => {
   try {
     const response = await axios({
@@ -12,7 +13,7 @@ export const getCharacterInfo = async (
       url: `${baseURL}/character/`,
       params: {
         name: `${value}`,
-        page: 1,
+        page: page,
       },
     });
     return response.data;

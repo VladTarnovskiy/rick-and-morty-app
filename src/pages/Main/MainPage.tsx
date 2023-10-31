@@ -5,25 +5,33 @@ import { Character, CharacterInfo } from '../../types/types';
 import { Card } from '../../components/Card/Card';
 import './mainPage.scss';
 import { Loader } from '../../components/Loader/Loader';
+import { Pagination } from '../../components/Pagination/Pagination';
 
 export const MainPage: FC = () => {
   const [character, setCharacter] = useState<Character[]>([]);
   const [result, setResult] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [page, setPage] = useState(1);
 
-  const searchProducts = useCallback(async (value: string) => {
-    try {
-      setContent(false, true);
-      const characterInfo: CharacterInfo = await getCharacterInfo(value);
-      setTimeout(() => {
-        const character = characterInfo.results;
-        setCharacter(character);
-        setContent(true, false);
-      }, 3000);
-    } catch {
-      setContent(false, false);
-    }
-  }, []);
+  const searchProducts = useCallback(
+    async (value: string) => {
+      try {
+        setContent(false, true);
+        const characterInfo: CharacterInfo = await getCharacterInfo(
+          value,
+          page
+        );
+        setTimeout(() => {
+          const character = characterInfo.results;
+          setCharacter(character);
+          setContent(true, false);
+        }, 3000);
+      } catch {
+        setContent(false, false);
+      }
+    },
+    [page]
+  );
 
   useEffect(() => {
     const searchValue: string = localStorage.getItem('searchValue') || '';
@@ -50,6 +58,7 @@ export const MainPage: FC = () => {
     <div>
       <SearchBar onSearch={searchProducts} />
       <div className="cards__container p-5">{content}</div>
+      {result && <Pagination page={page} setPage={setPage} />}
     </div>
   );
 };
