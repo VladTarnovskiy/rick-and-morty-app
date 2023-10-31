@@ -13,7 +13,6 @@ export const getCharacterInfo = async (
       params: {
         name: `${value}`,
         page: 1,
-        // count: 10,
       },
     });
     return response.data;
