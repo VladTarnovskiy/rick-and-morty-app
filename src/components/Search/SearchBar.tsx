@@ -68,7 +68,7 @@ export class SearchBar extends Component<MyProps, MyState> {
           </button>
           <button
             onClick={() => this.setState({ error: true })}
-            className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-red-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
+            className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-teal-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
           >
             Error
           </button>
