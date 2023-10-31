@@ -1,0 +1,79 @@
+import { ChangeEvent, Component } from 'react';
+import SearchImg from '../../assets/search.svg';
+
+interface MyState {
+  value: string;
+  error: boolean;
+}
+
+interface MyProps {
+  onSearch: (value: string) => void;
+}
+
+export class SearchBar extends Component<MyProps, MyState> {
+  state = { value: '', error: false };
+
+  componentDidMount() {
+    const searchValue = localStorage.getItem('searchValue');
+    if (searchValue !== null) {
+      this.setState({ value: searchValue });
+    }
+  }
+
+  componentDidUpdate() {
+    const { value } = this.state;
+    localStorage.setItem('searchValue', value);
+  }
+
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ value: event.target.value });
+  };
+
+  handleSubmit = () => {
+    const { value } = this.state;
+    const { onSearch } = this.props;
+    onSearch(value);
+  };
+
+  onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSubmit();
+    }
+  };
+
+  onError = () => {
+    throw new Error('new Error');
+  };
+
+  render() {
+    const { value } = this.state;
+    return (
+      <div className="py-4 bg-gray-900">
+        {this.state.error && this.onError()}
+
+        <div className="search flex justify-center items-center">
+          <input
+            type="search"
+            onChange={this.handleChange}
+            onKeyDown={this.onKeyPressHandler}
+            value={value}
+            className="h-full w-72 rounded-[7px] text-white  shadow-md shadow-teal-500 bg-transparent px-3 py-2.5 font-sans text-sm font-normal outline-0 focus:shadow-yellow-400"
+            placeholder="Search"
+          />
+          <button
+            onClick={this.handleSubmit}
+            className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm  ml-[1px] hover:shadow-yellow-400 bg-gray-800"
+          >
+            <img src={SearchImg} alt="Search" className="w-6 h-6 m-auto" />
+          </button>
+          <button
+            onClick={() => this.setState({ error: true })}
+            className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-teal-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
+          >
+            Error
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
