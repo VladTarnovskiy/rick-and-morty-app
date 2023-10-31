@@ -1,14 +1,14 @@
-export interface ChartersInfo {
+export interface CharacterInfo {
   info: {
     count: number;
     pages: number;
     next: string;
     prev: string;
   };
-  results: Charter[];
+  results: Character[];
 }
 
-export interface Charter {
+export interface Character {
   id: number;
   name: string;
   status: string;

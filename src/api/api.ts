@@ -1,9 +1,11 @@
-import { ChartersInfo } from '../types/types';
+import { CharacterInfo } from '../types/types';
 import axios from 'axios';
 
 const baseURL = 'https://rickandmortyapi.com/api';
 
-export const getChartersInfo = async (value: string): Promise<ChartersInfo> => {
+export const getCharacterInfo = async (
+  value: string
+): Promise<CharacterInfo> => {
   try {
     const response = await axios({
       method: 'get',

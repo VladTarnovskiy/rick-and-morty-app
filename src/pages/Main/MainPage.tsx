@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { SearchBar } from '../../components/Search/SearchBar';
-import { getChartersInfo } from '../../services/service';
-import { Charter, ChartersInfo } from '../../types/types';
+import { getCharacterInfo } from '../../api/api';
+import { Character, CharacterInfo } from '../../types/types';
 import { Card } from '../../components/Card/Card';
 import './mainPage.scss';
 import { Loader } from '../../components/Loader/Loader';
@@ -9,14 +9,14 @@ import { Loader } from '../../components/Loader/Loader';
 interface MyProps {}
 
 interface MyState {
-  charters: Charter[];
+  character: Character[];
   result: boolean;
   loader: boolean;
 }
 
 export class MainPage extends Component<MyProps, MyState> {
   state = {
-    charters: [],
+    character: [],
     result: false,
     loader: false,
   };
@@ -30,30 +30,25 @@ export class MainPage extends Component<MyProps, MyState> {
   }
   searchProducts = async (value: string) => {
     try {
-      this.setState((prevState) => {
-        return {
-          charters: prevState.charters,
-          result: false,
-          loader: true,
-        };
+      this.setState({
+        result: false,
+        loader: true,
       });
-      const chartersInfo: ChartersInfo = await getChartersInfo(value);
+      const characterInfo: CharacterInfo = await getCharacterInfo(value);
       setTimeout(() => {
-        const charters = chartersInfo.results;
-        this.setState({ charters: charters, result: true, loader: false });
+        const character = characterInfo.results;
+        this.setState({ character: character, result: true, loader: false });
       }, 3000);
     } catch {
-      this.setState((prevState) => {
-        return { charters: prevState.charters, result: false, loader: false };
-      });
+      this.setState({ result: false, loader: false });
     }
   };
 
   render() {
     let content: JSX.Element | JSX.Element[];
     if (this.state.result) {
-      content = this.state.charters.map((charter: Charter) => (
-        <Card charter={charter} key={charter.id} />
+      content = this.state.character.map((character: Character) => (
+        <Card character={character} key={character.id} />
       ));
     } else if (!this.state.result && !this.state.loader) {
       content = <div className="text-white mt-[300px]">Nothing Found.</div>;

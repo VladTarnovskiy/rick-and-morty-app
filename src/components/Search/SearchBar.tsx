@@ -3,6 +3,7 @@ import SearchImg from '../../assets/search.svg';
 
 interface MyState {
   value: string;
+  error: boolean;
 }
 
 interface MyProps {
@@ -10,7 +11,7 @@ interface MyProps {
 }
 
 export class SearchBar extends Component<MyProps, MyState> {
-  state = { value: '' };
+  state = { value: '', error: false };
 
   componentDidMount() {
     const searchValue = localStorage.getItem('searchValue');
@@ -40,10 +41,16 @@ export class SearchBar extends Component<MyProps, MyState> {
     }
   };
 
+  onError = () => {
+    throw new Error('new Error');
+  };
+
   render() {
     const { value } = this.state;
     return (
       <div className="py-4 bg-gray-900">
+        {this.state.error && this.onError()}
+
         <div className="search flex justify-center items-center">
           <input
             type="search"
@@ -58,6 +65,12 @@ export class SearchBar extends Component<MyProps, MyState> {
             className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm  ml-[1px] hover:shadow-yellow-400 bg-gray-800"
           >
             <img src={SearchImg} alt="Search" className="w-6 h-6 m-auto" />
+          </button>
+          <button
+            onClick={() => this.setState({ error: true })}
+            className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-red-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
+          >
+            Error
           </button>
         </div>
       </div>

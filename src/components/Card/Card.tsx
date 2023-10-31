@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { Charter } from 'types/types';
+import { Character } from 'types/types';
 
 interface MyProps {
-  charter: Charter;
+  character: Character;
 }
 
 export class Card extends Component<MyProps> {
@@ -20,7 +20,7 @@ export class Card extends Component<MyProps> {
     return color;
   }
   render() {
-    const { name, location, image, species, status } = this.props.charter;
+    const { name, location, image, species, status } = this.props.character;
     const color = this.getStatusColor(status);
     return (
       <div className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg">
