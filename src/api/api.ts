@@ -16,6 +16,8 @@ export const getCharacterInfo = async (
         page: page,
       },
     });
+    console.log(response.data);
+
     return response.data;
   } catch (err) {
     throw new Error('Something went wrong.');

@@ -12,6 +12,7 @@ export const MainPage: FC = () => {
   const [result, setResult] = useState(false);
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
 
   const searchProducts = useCallback(
     async (value: string) => {
@@ -23,6 +24,7 @@ export const MainPage: FC = () => {
         );
         setTimeout(() => {
           const character = characterInfo.results;
+          setPages(characterInfo.info.pages);
           setCharacter(character);
           setContent(true, false);
         }, 3000);
@@ -58,7 +60,7 @@ export const MainPage: FC = () => {
     <div>
       <SearchBar onSearch={searchProducts} />
       <div className="cards__container p-5">{content}</div>
-      {result && <Pagination page={page} setPage={setPage} />}
+      {result && <Pagination page={page} setPage={setPage} pages={pages} />}
     </div>
   );
 };

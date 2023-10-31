@@ -6,12 +6,13 @@ import clsx from 'clsx';
 
 interface MyProps {
   page: number;
+  pages: number;
   setPage: (page: number) => void;
 }
 
-export const Pagination: FC<MyProps> = ({ page, setPage }) => {
+export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
   return (
-    <div className="flex justify-center text-2xl mb-6 text-teal-500">
+    <div className="flex justify-center text-2xl mb-5 text-teal-500">
       <Button
         onClick={() => {
           const locPage = page > 1 ? page - 1 : page;
@@ -31,7 +32,9 @@ export const Pagination: FC<MyProps> = ({ page, setPage }) => {
         <img
           src={ArrowImgRight}
           alt="Turn right"
-          className="w-7 h-7 mt-[-2px]"
+          className={clsx('w-7 h-7 mt-[-2px]', {
+            'opacity-20': page === pages ? true : false,
+          })}
         />
       </Button>
     </div>
