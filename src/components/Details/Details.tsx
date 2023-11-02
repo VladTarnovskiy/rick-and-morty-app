@@ -1,15 +1,16 @@
 import { FC } from 'react';
-// import { Loader } from '../Loader/Loader';
-import { defer, useLoaderData } from 'react-router-dom';
+import { Loader } from '../Loader/Loader';
+import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import { Character } from 'types/types';
 import { getCharacterInfo } from '../../api/api';
-import { LoaderFunction } from 'react-router-dom';
+// import { getCharacterInfo } from '../../api/api';
+// import { LoaderFunction } from 'react-router-dom';
 
 interface LoaderParams {
   detailsId: string;
 }
 
-export const Details: FC = () => {
+const Details: FC = () => {
   const character = useLoaderData() as Character;
   const status = character.status;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -55,54 +56,57 @@ export const Details: FC = () => {
   const color = getStatusColor(status);
 
   return (
-    <>
-      {/* {character ? ( */}
-      <div
-        className="card flex flex-col text-white text-lg justify-start items-center rounded-xl w-[350px] bg-zinc-700 shadow-lg"
-        key={character.id}
-      >
-        <img
-          src={character.image}
-          alt="episode__img"
-          className="rounded-lg w-full"
-        />
+    <div>
+      <div className="title text-teal-500 text-center text-2xl font-thin mb-2">
+        Details
+      </div>
+      {character ? (
+        <div
+          className="card flex flex-col text-white text-lg justify-start items-center rounded-xl w-[350px] bg-zinc-700 shadow-lg"
+          key={character.id}
+        >
+          <img
+            src={character.image}
+            alt="episode__img"
+            className="rounded-lg w-full"
+          />
 
-        <div className="card_description flex-col self-start p-4">
-          <div className="card__title text-2xl font-bold">{character.name}</div>
-          <div className="card__status mb-1">
-            <span className={color}>● </span>
-            {character.species} - {character.status}
-          </div>
-          <div className="card__location flex flex-col mb-1">
-            <div className="location__title text-md text-zinc-400">
-              Last known location:
+          <div className="card_description flex-col self-start p-4">
+            <div className="card__title text-2xl font-bold">
+              {character.name}
             </div>
-            <div className="location__content">{character.location.name}</div>
-          </div>
-          <div>
-            <div className="text-zinc-400">Episodes:</div>
-            {character.episode.map((ep, index) => {
-              const episodeNum = ep.split('/').at(-1);
-              if (index === character.episode.length - 1) {
-                return <span key={episodeNum}>{episodeNum}</span>;
-              }
-              return <span key={episodeNum}>{episodeNum}, </span>;
-            })}
+            <div className="card__status mb-1">
+              <span className={color}>● </span>
+              {character.species} - {character.status}
+            </div>
+            <div className="card__location flex flex-col mb-1">
+              <div className="location__title text-md text-zinc-400">
+                Last known location:
+              </div>
+              <div className="location__content">{character.location.name}</div>
+            </div>
+            <div>
+              <div className="text-zinc-400">Episodes:</div>
+              {character.episode.map((ep, index) => {
+                const episodeNum = ep.split('/').at(-1);
+                if (index === character.episode.length - 1) {
+                  return <span key={episodeNum}>{episodeNum}</span>;
+                }
+                return <span key={episodeNum}>{episodeNum}, </span>;
+              })}
+            </div>
           </div>
         </div>
-      </div>
-      {/* ) : (
+      ) : (
         <Loader />
-      )} */}
-    </>
+      )}
+    </div>
   );
 };
 
-export const detailsLoader: LoaderFunction<LoaderParams> = async ({
-  params,
-}) => {
+const detailsLoader: LoaderFunction<LoaderParams> = async ({ params }) => {
   const characterData = await getCharacterInfo(Number(params.detailsId));
-  return defer({
-    characterData,
-  });
+  return characterData;
 };
+
+export { detailsLoader, Details };
