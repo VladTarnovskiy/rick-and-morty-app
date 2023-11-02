@@ -15,13 +15,19 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_searchParams, setSearchParams] = useSearchParams();
 
+  const setPageParams = (page: number) => {
+    setSearchParams((prevParams) => {
+      return { ...prevParams, frontpage: String(page) };
+    });
+  };
+
   return (
     <div className="flex justify-center text-2xl mb-5 text-teal-500">
       <Button
         onClick={() => {
           const locPage = page > 1 ? page - 1 : page;
           setPage(locPage);
-          setSearchParams({ frontpage: String(locPage) });
+          setPageParams(locPage);
         }}
       >
         <img
@@ -36,7 +42,7 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
       <Button
         onClick={() => {
           setPage(page + 1);
-          setSearchParams({ frontpage: String(page + 1) });
+          setPageParams(page + 1);
         }}
       >
         <img
