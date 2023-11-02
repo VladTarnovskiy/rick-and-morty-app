@@ -28,3 +28,13 @@ export interface Character {
   url: string;
   created: string;
 }
+
+export interface Location {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: string[];
+  url: 'https://rickandmortyapi.com/api/episode/28';
+  created: string;
+}

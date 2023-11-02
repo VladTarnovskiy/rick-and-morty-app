@@ -1,11 +1,12 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { SearchBar } from '../../components/Search/SearchBar';
-import { getCharacterInfo } from '../../api/api';
+import { getCharactersInfo } from '../../api/api';
 import { Character, CharacterInfo } from '../../types/types';
 import { Card } from '../../components/Card/Card';
 import './mainPage.scss';
 import { Loader } from '../../components/Loader/Loader';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { Outlet } from 'react-router-dom';
 
 export const MainPage: FC = () => {
   const [character, setCharacter] = useState<Character[]>([]);
@@ -18,7 +19,7 @@ export const MainPage: FC = () => {
     async (value: string) => {
       try {
         setContent(false, true);
-        const characterInfo: CharacterInfo = await getCharacterInfo(
+        const characterInfo: CharacterInfo = await getCharactersInfo(
           value,
           page
         );
@@ -59,8 +60,15 @@ export const MainPage: FC = () => {
   return (
     <div>
       <SearchBar onSearch={searchProducts} />
-      <div className="cards__container p-5">{content}</div>
-      {result && <Pagination page={page} setPage={setPage} pages={pages} />}
+      <div className="content flex justify-around w-full">
+        <div className="content__list flex-grow">
+          <div className="cards__container p-5">{content}</div>
+          {result && <Pagination page={page} setPage={setPage} pages={pages} />}
+        </div>
+        <div className="content__details mt-5 pr-5">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };

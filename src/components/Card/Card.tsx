@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { Character } from 'types/types';
 
 interface MyProps {
@@ -6,7 +7,7 @@ interface MyProps {
 }
 
 export const Card: FC<MyProps> = ({ character }) => {
-  const { name, location, image, species, status } = character;
+  const { name, location, image, species, status, id } = character;
   const getStatusColor = (value: string) => {
     let color = 'text-sky-500';
 
@@ -23,22 +24,28 @@ export const Card: FC<MyProps> = ({ character }) => {
   const color = getStatusColor(status);
 
   return (
-    <div className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg">
-      <img src={image} alt="episode__img" className="h-full rounded-lg mr-3" />
+    <Link to={`details/${id}`}>
+      <div className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg">
+        <img
+          src={image}
+          alt="episode__img"
+          className="h-full rounded-lg mr-3"
+        />
 
-      <div className="card_description flex-col">
-        <div className="card__title text-2xl font-bold ">{name}</div>
-        <div className="card__status mb-1">
-          <span className={color}>● </span>
-          {species} - {status}
-        </div>
-        <div className="card__location flex flex-col mb-1">
-          <div className="location__title text-md text-zinc-400">
-            Last known location:
+        <div className="card_description flex-col">
+          <div className="card__title text-2xl font-bold ">{name}</div>
+          <div className="card__status mb-1">
+            <span className={color}>● </span>
+            {species} - {status}
           </div>
-          <div className="location__content">{location.name}</div>
+          <div className="card__location flex flex-col mb-1">
+            <div className="location__title text-md text-zinc-400">
+              Last known location:
+            </div>
+            <div className="location__content">{location.name}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

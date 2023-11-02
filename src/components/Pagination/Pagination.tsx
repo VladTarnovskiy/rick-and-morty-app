@@ -3,6 +3,7 @@ import { Button } from '../../components/Button/Button';
 import ArrowImgLeft from '../../assets/arrow-sm-left.svg';
 import ArrowImgRight from '../../assets/arrow-sm-right.svg';
 import clsx from 'clsx';
+import { useSearchParams } from 'react-router-dom';
 
 interface MyProps {
   page: number;
@@ -11,12 +12,16 @@ interface MyProps {
 }
 
 export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div className="flex justify-center text-2xl mb-5 text-teal-500">
       <Button
         onClick={() => {
           const locPage = page > 1 ? page - 1 : page;
           setPage(locPage);
+          setSearchParams({ frontpage: String(locPage) });
         }}
       >
         <img
@@ -28,7 +33,12 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
         />
       </Button>
       <div className="mx-2 pt-[2px]">{page}</div>
-      <Button onClick={() => setPage(page + 1)}>
+      <Button
+        onClick={() => {
+          setPage(page + 1);
+          setSearchParams({ frontpage: String(page + 1) });
+        }}
+      >
         <img
           src={ArrowImgRight}
           alt="Turn right"
