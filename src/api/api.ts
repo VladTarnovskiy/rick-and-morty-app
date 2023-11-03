@@ -29,11 +29,8 @@ export const getCharacterInfo = async (id: number): Promise<Character> => {
       method: 'get',
       url: `${baseURL}/character/${id}`,
     });
-    console.log(response.data);
-
     return response.data;
   } catch (err) {
-    // throw new Error('Something went wrong.');
-    throw new Response('', { statusText: (err as Error).message });
+    throw new Error('Something went wrong.');
   }
 };

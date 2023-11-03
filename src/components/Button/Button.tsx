@@ -9,7 +9,7 @@ export const Button: FC<MyProps> = ({ onClick, children }) => {
   return (
     <button
       onClick={onClick}
-      className="h-10 rounded-md p-2 text-md shadow-teal-500 shadow-sm hover:shadow-yellow-400 bg-gray-800"
+      className="h-10 rounded-md p-2 text-md shadow-teal-500 shadow-sm hover:shadow-yellow-400 bg-gray-800 text-teal-500"
     >
       {children}
     </button>

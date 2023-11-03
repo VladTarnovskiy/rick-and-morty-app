@@ -1,8 +1,16 @@
 import { FC, Suspense } from 'react';
 import { Loader } from '../Loader/Loader';
-import { Await, LoaderFunction, defer, useLoaderData } from 'react-router-dom';
+import {
+  Await,
+  LoaderFunction,
+  defer,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { Character } from 'types/types';
 import { getCharacterInfo } from '../../api/api';
+import { Button } from '../../components/Button/Button';
 
 interface LoaderParams {
   detailsId: string;
@@ -14,34 +22,10 @@ interface CharacterLoader {
 
 const Details: FC = () => {
   const { character } = useLoaderData() as CharacterLoader;
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
   const status = character.status;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [_searchParams, setSearchParams] = useSearchParams();
-  // setSearchParams((prevParams) => {
-  //   return { ...prevParams, details: character.id };
-  // });
-
-  // useEffect(() => {
-  //   setSearchParams((prevParams) => {
-  //     return { ...prevParams, details: character.id };
-  //   });
-  // }, [character.id, setSearchParams]);
-
-  // const [character, setCharacter] = useState<Character>();
-  // const { detailsId } = useParams();
-
-  // const searchProducts = useCallback(async () => {
-  //   try {
-  //     const character: Character = await getCharacterInfo(Number(detailsId));
-  //     setCharacter(character);
-  //   } catch {
-  //     console.log('Character Error.');
-  //   }
-  // }, [detailsId]);
-
-  // useEffect(() => {
-  //   searchProducts();
-  // }, [searchProducts]);
   const getStatusColor = (value: string) => {
     let color = 'text-sky-500';
 
@@ -56,6 +40,11 @@ const Details: FC = () => {
     return color;
   };
   const color = getStatusColor(status);
+
+  const onClose = () => {
+    navigate('/', { replace: false, state: { from: 'current-path' } });
+    setSearchParams(searchParams);
+  };
 
   return (
     <div>
@@ -81,7 +70,7 @@ const Details: FC = () => {
                 className="rounded-lg w-[350px] h-[350px]"
               />
 
-              <div className="card_description flex-col self-start p-4">
+              <div className="card_description flex-col self-start p-4 pb-2">
                 <div className="card__title text-2xl font-bold">
                   {resolvedCharacter.name}
                 </div>
@@ -107,6 +96,9 @@ const Details: FC = () => {
                     return <span key={episodeNum}>{episodeNum}, </span>;
                   })}
                 </div>
+              </div>
+              <div className="m-auto mb-2">
+                <Button onClick={onClose}>Close</Button>
               </div>
             </div>
           )}

@@ -59,7 +59,7 @@ export const MainPage: FC = () => {
   }
   return (
     <div>
-      <SearchBar onSearch={searchProducts} />
+      <SearchBar onSearch={searchProducts} setPage={setPage} />
       <div className="content flex justify-around w-full">
         <div className="content__list flex-grow">
           <div className="cards__container p-5">{content}</div>

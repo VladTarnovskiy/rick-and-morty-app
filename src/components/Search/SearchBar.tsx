@@ -1,13 +1,16 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import SearchImg from '../../assets/search.svg';
+import { useSearchParams } from 'react-router-dom';
 
 interface MyProps {
   onSearch: (value: string) => void;
+  setPage: (page: number) => void;
 }
 
-export const SearchBar: FC<MyProps> = ({ onSearch }) => {
+export const SearchBar: FC<MyProps> = ({ onSearch, setPage }) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const searchValue = localStorage.getItem('searchValue');
@@ -23,6 +26,10 @@ export const SearchBar: FC<MyProps> = ({ onSearch }) => {
   };
 
   const handleSubmit = () => {
+    setPage(1);
+    searchParams.set('page', '1');
+    searchParams.set('search', value);
+    setSearchParams(searchParams);
     onSearch(value);
   };
 

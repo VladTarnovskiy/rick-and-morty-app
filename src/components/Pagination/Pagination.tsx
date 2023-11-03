@@ -12,13 +12,11 @@ interface MyProps {
 }
 
 export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const setPageParams = (page: number) => {
-    setSearchParams((prevParams) => {
-      return { ...prevParams, frontpage: String(page) };
-    });
+    searchParams.set('page', String(page));
+    setSearchParams(searchParams);
   };
 
   return (
