@@ -29,7 +29,7 @@ export const Card: FC<MyProps> = ({ character }) => {
         <img
           src={image}
           alt="episode__img"
-          className="h-full rounded-lg mr-3"
+          className="h-[180px] w-[180px] rounded-lg mr-3"
         />
 
         <div className="card_description flex-col">

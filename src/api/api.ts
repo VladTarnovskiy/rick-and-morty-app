@@ -33,6 +33,7 @@ export const getCharacterInfo = async (id: number): Promise<Character> => {
 
     return response.data;
   } catch (err) {
-    throw new Error('Something went wrong.');
+    // throw new Error('Something went wrong.');
+    throw new Response('', { statusText: (err as Error).message });
   }
 };
