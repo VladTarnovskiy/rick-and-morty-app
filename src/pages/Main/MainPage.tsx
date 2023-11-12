@@ -67,7 +67,10 @@ export const MainPage: FC = () => {
   return (
     <div>
       <SearchBar onSearch={searchProducts} setPage={setPage} />
-      <div className="content flex justify-around w-full">
+      <div
+        className="content flex justify-around w-full"
+        data-testid="main-page-element"
+      >
         <div className="content__list flex-grow">
           <div className="cards__container p-5">{content}</div>
           {result && <Pagination page={page} setPage={setPage} pages={pages} />}
