@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Character } from 'types/types';
+import { Character } from '../../types/types';
 
 interface MyProps {
   character: Character;

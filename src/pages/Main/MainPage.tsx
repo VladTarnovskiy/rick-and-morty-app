@@ -1,15 +1,22 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { SearchBar } from '../../components/Search/SearchBar';
 import { getCharactersInfo } from '../../api/api';
 import { Character, CharacterInfo } from '../../types/types';
-import { Card } from '../../components/Card/Card';
+import { Card } from '@/components/Card/Card';
 import './mainPage.scss';
-import { Loader } from '../../components/Loader/Loader';
-import { Pagination } from '../../components/Pagination/Pagination';
+import { Loader } from '@/components/Loader/Loader';
+import { Pagination } from '@/components/Pagination/Pagination';
+
 import { Outlet } from 'react-router-dom';
+import {
+  DataSearchContext,
+  DataSearchContextState,
+} from '@/context/dataSearchContext/dataSearchContext';
 
 export const MainPage: FC = () => {
-  const [character, setCharacter] = useState<Character[]>([]);
+  const { character, setCharacter } = useContext(
+    DataSearchContext
+  ) as DataSearchContextState;
   const [result, setResult] = useState(false);
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(1);
@@ -33,7 +40,7 @@ export const MainPage: FC = () => {
         setContent(false, false);
       }
     },
-    [page]
+    [page, setCharacter]
   );
 
   useEffect(() => {

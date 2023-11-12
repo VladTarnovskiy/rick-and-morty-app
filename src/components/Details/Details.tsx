@@ -8,7 +8,7 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import { Character } from 'types/types';
+import { Character } from '../../types/types';
 import { getCharacterInfo } from '../../api/api';
 import { Button } from '../../components/Button/Button';
 

@@ -1,6 +1,10 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
 import SearchImg from '../../assets/search.svg';
 import { useSearchParams } from 'react-router-dom';
+import {
+  DataSearchContext,
+  DataSearchContextState,
+} from '@/context/dataSearchContext/dataSearchContext';
 
 interface MyProps {
   onSearch: (value: string) => void;
@@ -8,29 +12,31 @@ interface MyProps {
 }
 
 export const SearchBar: FC<MyProps> = ({ onSearch, setPage }) => {
-  const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { searchValue, setSearchValue } = useContext(
+    DataSearchContext
+  ) as DataSearchContextState;
 
   useEffect(() => {
-    const searchValue = localStorage.getItem('searchValue');
-    if (searchValue !== null) {
-      setValue(searchValue);
+    const storageValue = localStorage.getItem('searchValue');
+    if (storageValue !== null) {
+      setSearchValue(storageValue);
     }
-  }, []);
+  }, [setSearchValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setValue(inputValue);
+    setSearchValue(inputValue);
     localStorage.setItem('searchValue', inputValue);
   };
 
   const handleSubmit = () => {
     setPage(1);
     searchParams.set('page', '1');
-    searchParams.set('search', value);
+    searchParams.set('search', searchValue);
     setSearchParams(searchParams);
-    onSearch(value);
+    onSearch(searchValue);
   };
 
   const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -52,7 +58,7 @@ export const SearchBar: FC<MyProps> = ({ onSearch, setPage }) => {
           type="search"
           onChange={handleChange}
           onKeyDown={onKeyPressHandler}
-          value={value}
+          value={searchValue}
           className="h-full w-72 rounded-[7px] text-white  shadow-md shadow-teal-500 bg-transparent px-3 py-2.5 font-sans text-sm font-normal outline-0 focus:shadow-yellow-400"
           placeholder="Search"
         />
