@@ -25,10 +25,7 @@ export const Card: FC<MyProps> = ({ character }) => {
 
   return (
     <Link to={`details/${id}`}>
-      <div
-        className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg"
-        data-testid="card-element"
-      >
+      <div className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg">
         <img
           src={image}
           alt="episode__img"

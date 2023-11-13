@@ -36,7 +36,9 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
           })}
         />
       </Button>
-      <div className="mx-2 pt-[2px]">{page}</div>
+      <div className="mx-2 pt-[2px]" data-testid="page-counter">
+        {page}
+      </div>
       <Button
         onClick={() => {
           setPage(page + 1);

@@ -63,7 +63,6 @@ const Details: FC = () => {
             <div
               className="card flex flex-col text-white text-lg justify-start items-center rounded-xl w-[350px] bg-zinc-700 shadow-lg"
               key={resolvedCharacter.id}
-              data-testid="cardDetail-element"
             >
               <img
                 src={resolvedCharacter.image}
