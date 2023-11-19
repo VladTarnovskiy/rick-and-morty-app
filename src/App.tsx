@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { DataSearchProvider } from './context/dataSearchContext/dataSearchContext';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 export const App: FC = () => {
   return (
     <>
-      <DataSearchProvider>
+      <Provider store={store}>
         <Outlet />
-      </DataSearchProvider>
+      </Provider>
     </>
   );
 };

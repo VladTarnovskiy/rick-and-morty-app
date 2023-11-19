@@ -1,48 +1,32 @@
-import { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import SearchImg from '../../assets/search.svg';
 import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  DataSearchContext,
-  DataSearchContextState,
-} from '@/context/dataSearchContext/dataSearchContext';
+  changePage,
+  selectSearchValue,
+  setSearchValue,
+} from '@/store/slices/MainPageSlice';
 
-interface MyProps {
-  onSearch: (value: string) => void;
-  setPage: (page: number) => void;
-}
-
-export const SearchBar: FC<MyProps> = ({ onSearch, setPage }) => {
+export const SearchBar: FC = () => {
+  const dispatch = useDispatch();
+  const searchValue = useSelector(selectSearchValue);
+  const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { searchValue, setSearchValue } = useContext(
-    DataSearchContext
-  ) as DataSearchContextState;
-
-  useEffect(() => {
-    const storageValue = localStorage.getItem('searchValue');
-    if (storageValue !== null) {
-      setSearchValue(storageValue);
-    }
-  }, [setSearchValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setSearchValue(inputValue);
-    localStorage.setItem('searchValue', inputValue);
+    setInputValue(inputValue);
   };
 
   const handleSubmit = () => {
-    setPage(1);
+    dispatch(changePage(1));
+    dispatch(setSearchValue(inputValue));
+    localStorage.setItem('searchValue', inputValue);
     searchParams.set('page', '1');
     searchParams.set('search', searchValue);
     setSearchParams(searchParams);
-    onSearch(searchValue);
-  };
-
-  const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSubmit();
-    }
   };
 
   const onError = () => {
@@ -57,8 +41,7 @@ export const SearchBar: FC<MyProps> = ({ onSearch, setPage }) => {
         <input
           type="search"
           onChange={handleChange}
-          onKeyDown={onKeyPressHandler}
-          value={searchValue}
+          value={inputValue}
           className="h-full w-72 rounded-[7px] text-white  shadow-md shadow-teal-500 bg-transparent px-3 py-2.5 font-sans text-sm font-normal outline-0 focus:shadow-yellow-400"
           placeholder="Search"
         />

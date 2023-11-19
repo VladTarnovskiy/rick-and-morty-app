@@ -4,15 +4,19 @@ import ArrowImgLeft from '../../assets/arrow-sm-left.svg';
 import ArrowImgRight from '../../assets/arrow-sm-right.svg';
 import clsx from 'clsx';
 import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changePage,
+  selectAmountPages,
+  selectPage,
+} from '@/store/slices/MainPageSlice';
 
-interface MyProps {
-  page: number;
-  pages: number;
-  setPage: (page: number) => void;
-}
-
-export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
+export const Pagination: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const dispatch = useDispatch();
+  const page = useSelector(selectPage);
+  const amountPages = useSelector(selectAmountPages);
 
   const setPageParams = (page: number) => {
     searchParams.set('page', String(page));
@@ -24,7 +28,7 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
       <Button
         onClick={() => {
           const locPage = page > 1 ? page - 1 : page;
-          setPage(locPage);
+          dispatch(changePage(locPage));
           setPageParams(locPage);
         }}
       >
@@ -41,7 +45,7 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
       </div>
       <Button
         onClick={() => {
-          setPage(page + 1);
+          dispatch(changePage(page + 1));
           setPageParams(page + 1);
         }}
       >
@@ -49,7 +53,7 @@ export const Pagination: FC<MyProps> = ({ page, pages, setPage }) => {
           src={ArrowImgRight}
           alt="Turn right"
           className={clsx('w-7 h-7 mt-[-2px]', {
-            'opacity-20': page === pages ? true : false,
+            'opacity-20': page === amountPages ? true : false,
           })}
         />
       </Button>
