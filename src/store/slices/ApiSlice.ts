@@ -12,7 +12,7 @@ export const apiSlice = createApi({
       query: ({ searchValue, page }) =>
         `/character/?name=${searchValue}&page=${page}`,
     }),
-    getCharacterInfo: builder.query<Character, number>({
+    getCharacterInfo: builder.query<Character, string>({
       query: (id) => `/character/${id}`,
     }),
   }),

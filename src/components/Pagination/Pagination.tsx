@@ -45,8 +45,9 @@ export const Pagination: FC = () => {
       </div>
       <Button
         onClick={() => {
-          dispatch(changePage(page + 1));
-          setPageParams(page + 1);
+          const locPage = page < amountPages! ? page + 1 : page;
+          dispatch(changePage(locPage));
+          setPageParams(locPage);
         }}
       >
         <img

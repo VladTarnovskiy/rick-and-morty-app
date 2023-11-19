@@ -21,12 +21,12 @@ export const SearchBar: FC = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(changePage(1));
-    dispatch(setSearchValue(inputValue));
-    localStorage.setItem('searchValue', inputValue);
     searchParams.set('page', '1');
     searchParams.set('search', searchValue);
     setSearchParams(searchParams);
+    dispatch(changePage(1));
+    dispatch(setSearchValue(inputValue));
+    localStorage.setItem('searchValue', inputValue);
   };
 
   const onError = () => {
