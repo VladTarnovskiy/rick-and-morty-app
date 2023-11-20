@@ -11,7 +11,9 @@ import {
 export const SearchBar: FC = () => {
   const dispatch = useDispatch();
   const searchValue = useSelector(selectSearchValue);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(
+    localStorage.getItem('searchValue') || ''
+  );
   const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -47,6 +49,7 @@ export const SearchBar: FC = () => {
         />
         <button
           onClick={handleSubmit}
+          data-testid="searchButton"
           className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm  ml-[1px] hover:shadow-yellow-400 bg-gray-800"
         >
           <img src={SearchImg} alt="Search" className="w-6 h-6 m-auto" />
