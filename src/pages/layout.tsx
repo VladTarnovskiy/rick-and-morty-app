@@ -3,6 +3,7 @@ import { Character, CharacterInfo } from '../types/types';
 import { Card } from '../components/Card/Card';
 import { Pagination } from '../components/Pagination/Pagination';
 import { ReactNode } from 'react';
+import Head from 'next/head';
 
 type MainProps = {
   children?: ReactNode;
@@ -14,18 +15,25 @@ export default function Layout({ cardsInfo, children }: MainProps) {
     <Card character={character} key={character.id} />
   ));
   return (
-    <div>
-      <SearchBar />
-      <div
-        className="content flex justify-around w-full"
-        data-testid="main-page-element"
-      >
-        <div className="content__list flex-grow">
-          <div className="cards__container p-5">{content}</div>
-          <Pagination amountPages={cardsInfo.info.pages} />
+    <>
+      <Head>
+        <title>React app</title>
+        <meta name="description" content="Next app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <div>
+        <SearchBar />
+        <div
+          className="content flex justify-around w-full"
+          data-testid="main-page-element"
+        >
+          <div className="content__list flex-grow">
+            <div className="cards__container p-5">{content}</div>
+            <Pagination amountPages={cardsInfo.info.pages} />
+          </div>
+          <div className="content__details mt-5 pr-5">{children}</div>
         </div>
-        <div className="content__details mt-5 pr-5">{children}</div>
       </div>
-    </div>
+    </>
   );
 }
