@@ -1,30 +1,33 @@
 import { ChangeEvent, FC, useState } from 'react';
 import Image from 'next/image';
 import SearchImg from '../../assets/search.svg';
-
-import { useDispatch } from 'react-redux';
-import { changePage, setSearchValue } from '@/store/slices/MainPageSlice';
 import { useRouter } from 'next/router';
-import { checkRouterQuery } from '@/utils/routerQuery';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { checkRouterQuery } from '../../utils/routerQuery';
 
 export const SearchBar: FC = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { search } = router.query;
   const [inputValue, setInputValue] = useState(checkRouterQuery(search) || '');
   const [error, setError] = useState(false);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setInputValue(inputValue);
   };
 
+  const setURL = () => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+    params.set('search', inputValue);
+    const href = pathname + '?' + params.toString();
+    return href;
+  };
+
   const handleSubmit = () => {
-    dispatch(changePage(1));
-    dispatch(setSearchValue(inputValue));
-    router.push({
-      query: { page: '1', search: inputValue },
-    });
+    router.push(setURL());
   };
 
   const onError = () => {

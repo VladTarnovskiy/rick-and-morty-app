@@ -8,15 +8,15 @@ import { Character, CharacterInfo } from '@/types/types';
 import { Card } from '@/components/Card/Card';
 // import { Loader } from '@/components/Loader/Loader';
 import { Pagination } from '@/components/Pagination/Pagination';
-// import { ReactNode } from 'react';
+import { ReactNode } from 'react';
 // import { Outlet } from 'react-router-dom';
 
 type MainProps = {
-  //   children?: ReactNode;
+  children?: ReactNode;
   cardsInfo: CharacterInfo;
 };
 
-export default function Layout({ cardsInfo }: MainProps) {
+export default function Layout({ cardsInfo, children }: MainProps) {
   // const page = useSelector(selectPage);
   // const searchValue = useSelector(selectSearchValue);
   // const dispatch = useDispatch();
@@ -53,7 +53,7 @@ export default function Layout({ cardsInfo }: MainProps) {
           <div className="cards__container p-5">{content}</div>
           <Pagination amountPages={cardsInfo.info.pages} />
         </div>
-        <div className="content__details mt-5 pr-5">{/* <Outlet /> */}</div>
+        <div className="content__details mt-5 pr-5">{children}</div>
       </div>
     </div>
   );

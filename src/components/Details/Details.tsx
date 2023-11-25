@@ -1,19 +1,17 @@
-import { FC, ReactNode } from 'react';
-import { Loader } from '../Loader/Loader';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { FC } from 'react';
 import { Button } from '../../components/Button/Button';
-import { useGetCharacterInfoQuery } from '@/store/slices/ApiSlice';
+import { Character } from '../../types/types';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
-export const Details: FC = () => {
-  const { detailsId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const {
-    data: characterInfo,
-    isLoading,
-    isSuccess,
-  } = useGetCharacterInfoQuery(detailsId!);
+interface IProps {
+  characterInfo: Character;
+}
 
-  const navigate = useNavigate();
+export const Details: FC<IProps> = ({ characterInfo }: IProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const getStatusColor = (value: string) => {
     let color = 'text-sky-500';
 
@@ -28,21 +26,21 @@ export const Details: FC = () => {
     return color;
   };
 
-  const onClose = () => {
-    navigate('/', { replace: false, state: { from: 'current-path' } });
-    setSearchParams(searchParams);
+  const setURL = () => {
+    const params = new URLSearchParams(searchParams);
+    const href = '/' + '?' + params.toString();
+    return href;
   };
 
-  let content: ReactNode;
+  const onClose = () => {
+    router.push(setURL());
+  };
 
-  if (isLoading) {
-    content = (
-      <div className="w-[350px] flex justify-center">
-        <Loader />
+  return (
+    <div>
+      <div className="title text-teal-500 text-center text-2xl font-thin mb-2">
+        Details
       </div>
-    );
-  } else if (isSuccess) {
-    content = (
       <div
         className="card flex flex-col text-white text-lg justify-start items-center rounded-xl w-[350px] bg-zinc-700 shadow-lg"
         key={characterInfo.id}
@@ -84,19 +82,6 @@ export const Details: FC = () => {
           <Button onClick={onClose}>Close</Button>
         </div>
       </div>
-    );
-  } else {
-    content = (
-      <div className="text-white mt-[300px]">Something went wrong.</div>
-    );
-  }
-
-  return (
-    <div>
-      <div className="title text-teal-500 text-center text-2xl font-thin mb-2">
-        Details
-      </div>
-      {content}
     </div>
   );
 };
