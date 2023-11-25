@@ -1,21 +1,18 @@
 import { ChangeEvent, FC, useState } from 'react';
+import Image from 'next/image';
 import SearchImg from '../../assets/search.svg';
-import { useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  changePage,
-  selectSearchValue,
-  setSearchValue,
-} from '@/store/slices/MainPageSlice';
+
+import { useDispatch } from 'react-redux';
+import { changePage, setSearchValue } from '@/store/slices/MainPageSlice';
+import { useRouter } from 'next/router';
+import { checkRouterQuery } from '@/utils/routerQuery';
 
 export const SearchBar: FC = () => {
   const dispatch = useDispatch();
-  const searchValue = useSelector(selectSearchValue);
-  const [inputValue, setInputValue] = useState(
-    localStorage.getItem('searchValue') || ''
-  );
+  const router = useRouter();
+  const { search } = router.query;
+  const [inputValue, setInputValue] = useState(checkRouterQuery(search) || '');
   const [error, setError] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -23,12 +20,11 @@ export const SearchBar: FC = () => {
   };
 
   const handleSubmit = () => {
-    searchParams.set('page', '1');
-    searchParams.set('search', searchValue);
-    setSearchParams(searchParams);
     dispatch(changePage(1));
     dispatch(setSearchValue(inputValue));
-    localStorage.setItem('searchValue', inputValue);
+    router.push({
+      query: { page: '1', search: inputValue },
+    });
   };
 
   const onError = () => {
@@ -38,7 +34,6 @@ export const SearchBar: FC = () => {
   return (
     <div className="py-4 bg-gray-900">
       {error && onError()}
-
       <div className="search flex justify-center items-center">
         <input
           type="search"
@@ -52,7 +47,13 @@ export const SearchBar: FC = () => {
           data-testid="searchButton"
           className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm  ml-[1px] hover:shadow-yellow-400 bg-gray-800"
         >
-          <img src={SearchImg} alt="Search" className="w-6 h-6 m-auto" />
+          <Image
+            src={SearchImg}
+            width={24}
+            height={24}
+            alt="Search"
+            className="w-6 h-6 m-auto"
+          />
         </button>
         <button
           onClick={() => setError(true)}

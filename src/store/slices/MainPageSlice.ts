@@ -10,7 +10,7 @@ interface InitialState {
 const initialState: InitialState = {
   page: 1,
   amountPages: null,
-  searchValue: localStorage.getItem('searchValue') || '',
+  searchValue: '',
 };
 
 const userSlice = createSlice({
