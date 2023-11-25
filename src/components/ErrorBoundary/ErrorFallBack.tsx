@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import DinoImg from '../../assets/error-dino.svg';
+import Image from 'next/image';
 
 interface Props {
   onReload: () => void;
@@ -8,7 +9,13 @@ interface Props {
 export const ErrorFallBack: FC<Props> = ({ onReload }) => {
   return (
     <div className="m-auto flex flex-col text-teal-500 justify-center items-center w-fit">
-      <img src={DinoImg} alt="Error dino" className="w-64 h-64 mt-[200px] " />
+      <Image
+        width={256}
+        height={256}
+        src={DinoImg}
+        alt="Error dino"
+        className="w-64 h-64 mt-[200px] "
+      />
       <div className="mt-2">Something went wrong.</div>
       <button
         onClick={onReload}
