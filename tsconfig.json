@@ -26,7 +26,13 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "src", "pages", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "src",
+    "pages",
+    ".next/types/**/*.ts",
+    "vite-env.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

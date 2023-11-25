@@ -2,12 +2,12 @@ import {
   getCharacterInfo,
   getCharactersInfo,
   getRunningQueriesThunk,
-} from '@/store/slices/ApiSlice';
-import { wrapper } from '@/store/store';
-import { checkRouterQuery } from '@/utils/routerQuery';
+} from '../../store/slices/ApiSlice';
+import { wrapper } from '../../store/store';
+import { checkRouterQuery } from '../../utils/routerQuery';
 import Layout from '../layout';
-import { Character, CharacterInfo } from '@/types/types';
-import { Details } from '@/components/Details/Details';
+import { Character, CharacterInfo } from '../../types/types';
+import { Details } from '../../components/Details/Details';
 
 interface IPageProps {
   pageProps: {

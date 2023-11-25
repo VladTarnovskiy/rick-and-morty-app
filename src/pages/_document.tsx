@@ -4,9 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" type="image/svg+xml" href="./src/assets/react.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>React App</title>
+        <link rel="icon" type="image/svg+xml" href="../assets/react.svg" />
       </Head>
       <body>
         <Main />

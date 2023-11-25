@@ -1,11 +1,11 @@
 import {
   getCharactersInfo,
   getRunningQueriesThunk,
-} from '@/store/slices/ApiSlice';
-import { wrapper } from '@/store/store';
-import { checkRouterQuery } from '@/utils/routerQuery';
+} from '../store/slices/ApiSlice';
+import { wrapper } from '../store/store';
+import { checkRouterQuery } from '../utils/routerQuery';
 import Layout from './layout';
-import { CharacterInfo } from '@/types/types';
+import { CharacterInfo } from '../types/types';
 
 interface IPageProps {
   pageProps: { cardsInfo: { data: CharacterInfo } };
