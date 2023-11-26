@@ -30,7 +30,9 @@ export const Pagination = ({ amountPages }: IProps) => {
         onClick={() => {
           const page = Number(searchParams.get('page'));
           const locPage = page > 1 ? page - 1 : page;
-          setPageParams(locPage);
+          if (page > 1) {
+            setPageParams(locPage);
+          }
         }}
       >
         <Image

@@ -79,7 +79,10 @@ export const Details: FC<IProps> = ({ characterInfo }: IProps) => {
           </div>
         </div>
         <div className="m-auto mb-2">
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onClose}>
+            <span data-testid="close-details"></span>
+            Close
+          </Button>
         </div>
       </div>
     </div>

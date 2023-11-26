@@ -1,36 +1,20 @@
 import { describe, expect, test } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SearchBar } from './SearchBar';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '@/store/store';
+import mockRouter from 'next-router-mock';
 
 describe('Search bar', () => {
-  test('check that the component retrieves the value from the local storage upon mounting', () => {
-    localStorage.setItem('searchValue', 'testValue');
-    render(
-      <Provider store={store}>
-        <SearchBar />
-      </Provider>,
-      {
-        wrapper: BrowserRouter,
-      }
-    );
+  mockRouter.push('/?search=Rick');
+
+  test('check that the component retrieves the value from url', () => {
+    render(<SearchBar />);
 
     const searchBar = screen.getByPlaceholderText('Search') as HTMLInputElement;
-    expect(searchBar.value).toBe('testValue');
+    expect(searchBar.value).toBe('Rick');
   });
 
-  test('verify that clicking the Search button saves the entered value to the local storage', async () => {
-    localStorage.setItem('searchValue', 'testValue');
-    render(
-      <Provider store={store}>
-        <SearchBar />
-      </Provider>,
-      {
-        wrapper: BrowserRouter,
-      }
-    );
+  test('verify that clicking the Search button saves the entered value to the url', async () => {
+    render(<SearchBar />);
 
     const searchBar = screen.getByPlaceholderText('Search');
     const button = screen.getByTestId('searchButton');
@@ -38,8 +22,7 @@ describe('Search bar', () => {
     fireEvent.change(searchBar, { target: { value: 'Rick' } });
     fireEvent.click(button);
 
-    const storageValue = localStorage.getItem('searchValue');
-
-    expect(storageValue).toBe('Rick');
+    const { search } = mockRouter.query;
+    expect(search).toBe('Rick');
   });
 });
