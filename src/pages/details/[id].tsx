@@ -5,7 +5,7 @@ import {
 } from '../../store/slices/ApiSlice';
 import { wrapper } from '../../store/store';
 import { checkRouterQuery } from '../../utils/routerQuery';
-import Layout from '../layout';
+import Layout from '../../components/Layout/Layout';
 import { Character, CharacterInfo } from '../../types/types';
 import { Details } from '../../components/Details/Details';
 

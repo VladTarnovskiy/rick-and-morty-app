@@ -4,8 +4,8 @@ import {
 } from '../store/slices/ApiSlice';
 import { wrapper } from '../store/store';
 import { checkRouterQuery } from '../utils/routerQuery';
-import Layout from './layout';
 import { CharacterInfo } from '../types/types';
+import Layout from '../components/Layout/Layout';
 
 interface IPageProps {
   pageProps: { cardsInfo: { data: CharacterInfo } };

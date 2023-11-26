@@ -3,6 +3,7 @@ import { Button } from '../../components/Button/Button';
 import { Character } from '../../types/types';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 interface IProps {
   characterInfo: Character;
@@ -45,8 +46,10 @@ export const Details: FC<IProps> = ({ characterInfo }: IProps) => {
         className="card flex flex-col text-white text-lg justify-start items-center rounded-xl w-[350px] bg-zinc-700 shadow-lg"
         key={characterInfo.id}
       >
-        <img
+        <Image
           src={characterInfo.image}
+          width={350}
+          height={350}
           alt="episode__img"
           className="rounded-lg w-[350px] h-[350px]"
         />

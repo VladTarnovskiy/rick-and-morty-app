@@ -31,7 +31,9 @@
     "src",
     "pages",
     ".next/types/**/*.ts",
-    "vite-env.d.ts"
+    "vite-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "references": [
     {

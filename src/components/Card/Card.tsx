@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Character } from '../../types/types';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 interface MyProps {
   character: Character;
@@ -41,8 +42,10 @@ export const Card: FC<MyProps> = ({ character }) => {
         className="card flex text-white text-lg justify-start items-center rounded-xl w-[450px] h-[180px] bg-zinc-700 shadow-lg"
         data-testid="card"
       >
-        <img
+        <Image
           src={image}
+          height={180}
+          width={180}
           alt="episode__img"
           className="h-[180px] w-[180px] rounded-lg mr-3"
         />

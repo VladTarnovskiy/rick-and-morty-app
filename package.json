@@ -7,7 +7,7 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix --ext .ts,.tsx ./src",
+    "lint": "next lint",
     "test": "vitest run --coverage",
     "preview": "vite preview",
     "prepare": "husky install",

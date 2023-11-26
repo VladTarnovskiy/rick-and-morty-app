@@ -1,7 +1,7 @@
-import { SearchBar } from '../components/Search/SearchBar';
-import { Character, CharacterInfo } from '../types/types';
-import { Card } from '../components/Card/Card';
-import { Pagination } from '../components/Pagination/Pagination';
+import { SearchBar } from '../Search/SearchBar';
+import { Character, CharacterInfo } from '../../types/types';
+import { Card } from '../Card/Card';
+import { Pagination } from '../Pagination/Pagination';
 import { ReactNode } from 'react';
 import Head from 'next/head';
 
