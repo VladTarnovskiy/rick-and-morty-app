@@ -30,12 +30,19 @@ export const SearchBar: FC = () => {
     localStorage.setItem('searchValue', inputValue);
   };
 
+  const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="py-4 bg-gray-900">
       <div className="search flex justify-center items-center">
         <input
           type="search"
           onChange={handleChange}
+          onKeyDown={onKeyPressHandler}
           value={inputValue}
           className="h-full w-72 rounded-[7px] text-white  shadow-md shadow-teal-500 bg-transparent px-3 py-2.5 font-sans text-sm font-normal outline-0 focus:shadow-yellow-400"
           placeholder="Search"
