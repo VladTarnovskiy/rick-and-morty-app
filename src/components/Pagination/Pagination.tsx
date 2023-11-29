@@ -15,7 +15,7 @@ export const Pagination = ({ amountPages }: IProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
 
   const setPageParams = (page: number) => {
     const params = new URLSearchParams(searchParams);

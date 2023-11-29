@@ -9,7 +9,6 @@ export const SearchBar: FC = () => {
   const router = useRouter();
   const { search } = router.query;
   const [inputValue, setInputValue] = useState(checkRouterQuery(search) || '');
-  const [error, setError] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -30,13 +29,8 @@ export const SearchBar: FC = () => {
     router.push(setURL());
   };
 
-  const onError = () => {
-    throw new Error('new Error');
-  };
-
   return (
     <div className="py-4 bg-gray-900">
-      {error && onError()}
       <div className="search flex justify-center items-center">
         <input
           type="search"
@@ -57,12 +51,6 @@ export const SearchBar: FC = () => {
             alt="Search"
             className="w-6 h-6 m-auto"
           />
-        </button>
-        <button
-          onClick={() => setError(true)}
-          className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-teal-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
-        >
-          Error
         </button>
       </div>
     </div>
