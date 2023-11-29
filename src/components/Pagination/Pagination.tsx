@@ -18,13 +18,22 @@ export const Pagination = ({ amountPages }: IProps) => {
   const page = Number(checkRouterQuery(router.query.page)) || 1;
 
   const setPageParams = (page: number) => {
-    router.push({
-      pathname: pathname,
-      query: {
-        page: page,
-        search: search ? checkRouterQuery(search) : '',
-      },
-    });
+    if (search) {
+      router.push({
+        pathname: pathname,
+        query: {
+          page: page,
+          search: checkRouterQuery(search),
+        },
+      });
+    } else {
+      router.push({
+        pathname: pathname,
+        query: {
+          page: page,
+        },
+      });
+    }
   };
 
   return (

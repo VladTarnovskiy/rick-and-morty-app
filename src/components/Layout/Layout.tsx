@@ -11,9 +11,15 @@ type MainProps = {
 };
 
 export default function Layout({ cardsInfo, children }: MainProps) {
-  const content = cardsInfo.results.map((character: Character) => (
-    <Card character={character} key={character.id} />
-  ));
+  let content: JSX.Element | JSX.Element[];
+  if (cardsInfo) {
+    content = cardsInfo.results.map((character: Character) => (
+      <Card character={character} key={character.id} />
+    ));
+  } else {
+    content = <div className="text-white mt-[300px]">Nothing Found.</div>;
+  }
+
   return (
     <>
       <Head>
@@ -29,7 +35,7 @@ export default function Layout({ cardsInfo, children }: MainProps) {
         >
           <div className="content__list flex-grow">
             <div className="cards__container p-5">{content}</div>
-            <Pagination amountPages={cardsInfo.info.pages} />
+            {cardsInfo && <Pagination amountPages={cardsInfo.info.pages} />}
           </div>
           <div className="content__details mt-5 pr-5">{children}</div>
         </div>
