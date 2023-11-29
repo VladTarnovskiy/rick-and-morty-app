@@ -1,34 +1,36 @@
-import { useState } from 'react';
 import { Button } from '../../components/Button/Button';
 import ArrowImgLeft from '../../assets/arrow-sm-left.svg';
 import ArrowImgRight from '../../assets/arrow-sm-right.svg';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { checkRouterQuery } from '../../utils/routerQuery';
 
 interface IProps {
   amountPages: number;
 }
 
 export const Pagination = ({ amountPages }: IProps) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+  const { search } = router.query;
+  const page = Number(checkRouterQuery(router.query.page)) || 1;
 
   const setPageParams = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', String(page));
-    router.push(pathname + '?' + params.toString());
-    setPage(page);
+    router.push({
+      pathname: pathname,
+      query: {
+        page: page,
+        search: search ? checkRouterQuery(search) : '',
+      },
+    });
   };
 
   return (
     <div className="flex justify-center text-2xl mb-5 text-teal-500">
       <Button
         onClick={() => {
-          const page = Number(searchParams.get('page'));
           const locPage = page > 1 ? page - 1 : page;
           if (page > 1) {
             setPageParams(locPage);

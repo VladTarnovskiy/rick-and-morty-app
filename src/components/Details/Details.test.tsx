@@ -20,9 +20,7 @@ describe('Details', () => {
   test('make sure the detailed card component closed', async () => {
     render(<Details characterInfo={dataMock} />);
     const button = screen.getByTestId('close-details');
-
     fireEvent.click(button);
-
     expect(button).toBeEnabled();
   });
 });

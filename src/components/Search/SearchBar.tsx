@@ -2,14 +2,13 @@ import { ChangeEvent, FC, useState } from 'react';
 import Image from 'next/image';
 import SearchImg from '../../assets/search.svg';
 import { useRouter } from 'next/router';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { checkRouterQuery } from '../../utils/routerQuery';
 
 export const SearchBar: FC = () => {
   const router = useRouter();
   const { search } = router.query;
   const [inputValue, setInputValue] = useState(checkRouterQuery(search) || '');
-  const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +17,7 @@ export const SearchBar: FC = () => {
   };
 
   const setURL = () => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     params.set('page', '1');
     params.set('search', inputValue);
     const href = pathname + '?' + params.toString();
