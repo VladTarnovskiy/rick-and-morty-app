@@ -4,6 +4,7 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { Details } from './Details';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
+
 describe('Details', () => {
   const routes = [
     {
@@ -23,7 +24,7 @@ describe('Details', () => {
   test('make sure the detailed card component correctly displays the detailed card data', async () => {
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       const name = screen.getByText(/Rick Sanchez/i);
       const status = screen.getByText(/Alive/i);
       const type = screen.getByText(/Human/i);

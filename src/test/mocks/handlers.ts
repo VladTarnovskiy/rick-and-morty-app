@@ -1,15 +1,14 @@
 import { http, HttpResponse } from 'msw';
-import { dataMock } from './dataMock';
+import { dataMock, dataMockItem } from './dataMock';
 
 export const handlers = [
   http.get('https://rickandmortyapi.com/api/character', () => {
-    return HttpResponse.json({
-      data: [dataMock, dataMock],
-    });
+    return HttpResponse.json(dataMock);
   }),
-  http.get('https://rickandmortyapi.com/api/character/*', () => {
-    return HttpResponse.json({
-      data: dataMock,
-    });
-  }),
+  http.get(
+    'https://rickandmortyapi.com/api/character/:detailsIdssss',
+    async () => {
+      return HttpResponse.json(dataMockItem);
+    }
+  ),
 ];

@@ -14,7 +14,6 @@ export const SearchBar: FC = () => {
   const [inputValue, setInputValue] = useState(
     localStorage.getItem('searchValue') || ''
   );
-  const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,14 +30,8 @@ export const SearchBar: FC = () => {
     localStorage.setItem('searchValue', inputValue);
   };
 
-  const onError = () => {
-    throw new Error('new Error');
-  };
-
   return (
     <div className="py-4 bg-gray-900">
-      {error && onError()}
-
       <div className="search flex justify-center items-center">
         <input
           type="search"
@@ -53,12 +46,6 @@ export const SearchBar: FC = () => {
           className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm  ml-[1px] hover:shadow-yellow-400 bg-gray-800"
         >
           <img src={SearchImg} alt="Search" className="w-6 h-6 m-auto" />
-        </button>
-        <button
-          onClick={() => setError(true)}
-          className="h-10 rounded-md w-10 text-md shadow-teal-500 shadow-sm text-teal-500 ml-10 hover:shadow-yellow-400 bg-gray-800"
-        >
-          Error
         </button>
       </div>
     </div>
