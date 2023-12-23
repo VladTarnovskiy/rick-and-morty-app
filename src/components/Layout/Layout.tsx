@@ -23,7 +23,7 @@ export default function Layout({ cardsInfo, children }: MainProps) {
   return (
     <>
       <Head>
-        <title>React app</title>
+        <title>Rick and Morty</title>
         <meta name="description" content="Next app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
